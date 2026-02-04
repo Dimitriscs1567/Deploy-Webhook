@@ -1,0 +1,23 @@
+[Unit]
+Description=GitHub Webhook Deploy Server
+After=network.target
+
+[Service]
+Type=simple
+User=deploy
+Group=deploy
+WorkingDirectory=/home/deploy/Deploy-Webhook
+ExecStart=/home/deploy/Deploy-Webhook/deployer
+StandardOutput=append:/var/log/Deploy-Webhook/access.log
+StandardError=append:/var/log/Deploy-Webhook/error.log
+Restart=always
+RestartSec=5
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log
+
+[Install]
+WantedBy=multi-user.target
