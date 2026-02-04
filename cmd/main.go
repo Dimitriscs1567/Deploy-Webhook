@@ -57,7 +57,7 @@ func main() {
 		logger.Fatalf("Failed to load config: %v", err)
 	}
 
-	http.HandleFunc("/webhook", webhookHandler)
+	http.HandleFunc("/gogetit", webhookHandler)
 	http.HandleFunc("/health", healthHandler)
 
 	addr := ":" + config.Port
