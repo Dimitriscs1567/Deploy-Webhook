@@ -1,0 +1,11 @@
+{
+  "port": "9000",
+  "secret": "your-github-webhook-secret",
+  "scripts_dir": "scripts",
+  "apps": {
+    "Lead-Your-Way-Website": {
+      "script": "lead-your-way-website.sh",
+      "branch": "prod"
+    }
+  }
+}
