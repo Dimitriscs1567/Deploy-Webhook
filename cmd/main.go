@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"bufio"
 	"io"
 	"log"
 	"net/http"
@@ -19,7 +20,7 @@ import (
 
 type Config struct {
 	Port       string               `json:"port"`
-	Secret     string               `json:"secret"`
+	Secret     string
 	ScriptsDir string               `json:"scripts_dir"`
 	Apps       map[string]AppConfig `json:"apps"`
 }
@@ -79,8 +80,35 @@ func loadConfig(path, baseDir string) error {
 	} else if !filepath.IsAbs(config.ScriptsDir) {
 		config.ScriptsDir = filepath.Join(baseDir, config.ScriptsDir)
 	}
+
+	envPath := filepath.Join(baseDir, ".env")
+	loadEnvFile(envPath)
+
+	config.Secret = os.Getenv("WEBHOOK_SECRET")
+
 	logger.Printf("Scripts directory: %s", config.ScriptsDir)
 	return nil
+}
+
+func loadEnvFile(path string) {
+	f, err := os.Open(path)
+	if err != nil {
+		return
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+		if line == "" || strings.HasPrefix(line, "#") {
+			continue
+		}
+		key, val, ok := strings.Cut(line, "=")
+		if !ok {
+			continue
+		}
+		os.Setenv(strings.TrimSpace(key), strings.TrimSpace(val))
+	}
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
