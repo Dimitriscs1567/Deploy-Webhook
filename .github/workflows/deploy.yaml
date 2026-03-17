@@ -32,7 +32,7 @@ jobs:
 
           if git fetch origin prod; then
             git checkout prod
-            git merge origin/main --no-edit -X theirs
+            git merge origin/main --no-edit -X theirs --allow-unrelated-histories
           else
             git checkout -B prod
           fi
