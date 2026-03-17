@@ -28,6 +28,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           cp deployer /tmp/deployer
+          rm deployer
 
           if git fetch origin prod; then
             git checkout prod
