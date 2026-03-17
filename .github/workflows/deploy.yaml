@@ -27,7 +27,17 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git checkout -B prod
+          cp deployer /tmp/deployer
+          rm deployer
+
+          if git fetch origin prod; then
+            git checkout prod
+            git merge origin/main --no-edit -X theirs --allow-unrelated-histories
+          else
+            git checkout -B prod
+          fi
+
+          cp /tmp/deployer deployer
           git add -f deployer
           git commit -m "Build $(date +'%Y-%m-%d %H:%M:%S')"
-          git push -f origin prod
+          git push origin prod

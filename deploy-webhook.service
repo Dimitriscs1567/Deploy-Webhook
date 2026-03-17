@@ -14,7 +14,7 @@ Restart=always
 RestartSec=5
 
 # Security hardening
-NoNewPrivileges=true
+NoNewPrivileges=false
 ProtectHome=false
 ReadWritePaths=/var/log
 
