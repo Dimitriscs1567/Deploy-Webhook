@@ -39,5 +39,5 @@ jobs:
 
           cp /tmp/deployer deployer
           git add -f deployer
-          git commit -m "Build $(date +'%Y-%m-%d %H:%M:%S')"
+          git diff --cached --quiet || git commit -m "Build $(date +'%Y-%m-%d %H:%M:%S')"
           git push origin prod
