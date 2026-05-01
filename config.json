@@ -10,8 +10,8 @@
       "script": "lead-your-way-frontend.sh",
       "branch": "deploy"
     },
-    "Lead-Your-Way": {
-      "script": "lead-your-way.sh",
+    "Chat-Agent": {
+      "script": "chat-agent.sh",
       "branch": "prod"
     }
   }
