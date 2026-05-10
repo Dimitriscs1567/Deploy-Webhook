@@ -26,8 +26,9 @@ type Config struct {
 }
 
 type AppConfig struct {
-	Script string `json:"script"`
-	Branch string `json:"branch"`
+	Script string   `json:"script"`
+	Branch string   `json:"branch"`
+	Args   []string `json:"args"`
 }
 
 type GitHubPushEvent struct {
@@ -179,7 +180,7 @@ func webhookHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	go runDeploy(repoName, appConfig.Script)
+	go runDeploy(repoName, appConfig.Script, appConfig.Args)
 
 	w.WriteHeader(http.StatusAccepted)
 	w.Write([]byte("Deployment started"))
@@ -198,15 +199,16 @@ func verifySignature(payload []byte, sig, secret string) bool {
 	return hmac.Equal([]byte(expected), []byte(sig))
 }
 
-func runDeploy(repoName, script string) {
+func runDeploy(repoName, script string, args []string) {
 	deployLock.Lock()
 	defer deployLock.Unlock()
 
 	scriptPath := filepath.Join(config.ScriptsDir, script)
-	logger.Printf("Running deploy script for %s: %s", repoName, scriptPath)
+	logger.Printf("Running deploy script for %s: %s %v", repoName, scriptPath, args)
 
 	start := time.Now()
-	cmd := exec.Command("/bin/bash", scriptPath)
+	cmdArgs := append([]string{scriptPath}, args...)
+	cmd := exec.Command("/bin/bash", cmdArgs...)
 	cmd.Env = append(os.Environ(), fmt.Sprintf("REPO_NAME=%s", repoName))
 
 	output, err := cmd.CombinedOutput()
