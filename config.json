@@ -8,11 +8,17 @@
     },
     "Lead-Your-Way-Frontend": {
       "script": "flutter-frontend.sh",
-      "branch": "deploy"
+      "branch": "deploy",
+      "args": ["frontend"]
     },
     "Chat-Agent": {
       "script": "chat-agent.sh",
       "branch": "prod"
+    },
+    "Lead-Your-Way-Assessment-Tool": {
+      "script": "flutter-frontend.sh",
+      "branch": "deploy",
+      "args": ["assessment"]
     }
   }
 }
