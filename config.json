@@ -19,6 +19,11 @@
       "script": "flutter-frontend.sh",
       "branch": "deploy",
       "args": ["assessment"]
+    },
+    "Step-Up-Frontend": {
+      "script": "flutter-frontend.sh",
+      "branch": "deploy",
+      "args": ["frontend"]
     }
   }
 }
