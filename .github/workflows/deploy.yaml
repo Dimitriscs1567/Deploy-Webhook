@@ -32,7 +32,14 @@ jobs:
 
           if git fetch origin prod; then
             git checkout prod
-            git merge origin/main --no-edit -X theirs --allow-unrelated-histories
+            # prod is a deploy-artifact branch: always take main's content on conflict.
+            # -X theirs resolves this on its own, but a shallow checkout can leave an
+            # add/add conflict unresolved, so force any remainder to main's version.
+            if ! git merge origin/main --no-edit -X theirs --allow-unrelated-histories; then
+              git checkout --theirs -- .
+              git add -A
+              git commit --no-edit
+            fi
           else
             git checkout -B prod
           fi
