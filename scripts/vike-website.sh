@@ -5,5 +5,5 @@ git fetch origin prod
 git merge --ff-only origin/prod
 npm ci
 npm run build
-sudo /bin/systemctl restart commercial-website
+sudo /bin/systemctl restart commercial-website.service
 echo "Deployment of Lead-Your-Way-Website complete!"
