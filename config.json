@@ -24,6 +24,10 @@
       "script": "flutter-frontend.sh",
       "branch": "deploy",
       "args": ["frontend"]
+    },
+    "Cogni-Train-Website": {
+      "script": "vike-website.sh",
+      "branch": "prod"
     }
   }
 }
