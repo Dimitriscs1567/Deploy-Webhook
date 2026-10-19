@@ -6,4 +6,4 @@ git merge --ff-only origin/prod
 npm ci
 npm run build
 sudo /bin/systemctl restart commercial-website.service
-echo "Deployment of Lead-Your-Way-Website complete!"
+echo "Deployment of ${REPO_NAME:-commercial website} complete!"
